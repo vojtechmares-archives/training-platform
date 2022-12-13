@@ -6,7 +6,7 @@ const baseStyles = {
   solid:
     "inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shaddow-sm focus:outline-none focus:ring-2 focus:ring-offset-2",
   outline:
-    " hover:text-white inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shaddow-sm focus:outline-none ring-1 focus:ring-2 focus:ring-offset-2",
+    "hover:text-white inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shaddow-sm focus:outline-none ring-1 focus:ring-2 focus:ring-offset-2",
 };
 
 const variantStyles = {
