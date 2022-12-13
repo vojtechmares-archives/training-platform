@@ -64,7 +64,6 @@ model VerificationToken {
 model Training {
   id           String @id @default(uuid())
   name         String
-  slug         String @unique
   priceOpen    Int
   priceCompany Int
   website      String

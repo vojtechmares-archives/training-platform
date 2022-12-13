@@ -1,14 +1,13 @@
-import { type NextPage } from "next";
 import Head from "next/head";
 
-import { Layout } from "@/components/Layout"
+import { Layout } from "@/components/Layout";
 import { NewTrainingForm } from "@/components/forms/NewTrainingForm";
 
-const NewTrainingPage: NextPage = (props) => {
+const NewTrainingPage = () => {
   return (
     <>
       <Head>
-        <title>Training dates | Training Hub</title>
+        <title>New Training | Training Hub</title>
       </Head>
       <Layout>
         <main className="lg:col-span-9 xl:col-span-9">
@@ -16,7 +15,7 @@ const NewTrainingPage: NextPage = (props) => {
         </main>
       </Layout>
     </>
-  )
-}
+  );
+};
 
 export default NewTrainingPage;

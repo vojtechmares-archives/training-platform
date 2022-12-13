@@ -1,36 +1,50 @@
-import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
 import { trpc } from "@/utils/trpc";
 import { formatCurrency } from "@/utils/currencyFormatter";
 
-import { Layout } from "@/components/Layout"
-import { Button } from "@/components/Button"
-import { Training } from "@prisma/client";
+import { Layout } from "@/components/Layout";
+import { Button } from "@/components/Button";
+import { type Training } from "@prisma/client";
 
-type TableProps = { trainings: Training[]|undefined }
+type TableProps = { trainings: Training[] | undefined };
 
-const Table = ({trainings}: TableProps) => {
+const Table = ({ trainings }: TableProps) => {
   if (trainings) {
     return (
       <>
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-white">
             <tr>
-              <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+              <th
+                scope="col"
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+              >
                 Name
               </th>
-              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
                 Price - Open
               </th>
-              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
                 Price - Company
               </th>
-              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
                 # days
               </th>
-              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
                 Website
               </th>
             </tr>
@@ -40,15 +54,21 @@ const Table = ({trainings}: TableProps) => {
               <tr key={training.name}>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
                   <Link
-                    href={"/training/" + training.slug }
+                    href={"/training/" + training.id}
                     className="text-gray-700 hover:text-gray-900"
                   >
                     {training.name}
                   </Link>
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{formatCurrency(training.priceOpen)}</td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{formatCurrency(training.priceCompany)}</td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{training.days}</td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {formatCurrency(training.priceOpen)}
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {formatCurrency(training.priceCompany)}
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {training.days}
+                </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 underline hover:text-gray-700">
                   <Link href={training.website} target="_blank">
                     {training.website}
@@ -59,16 +79,14 @@ const Table = ({trainings}: TableProps) => {
           </tbody>
         </table>
       </>
-    )
+    );
   } else {
-    return (
-      <>No trainings :(</>
-    )
+    return <>No trainings :(</>;
   }
-}
+};
 
-const TrainingPage: NextPage = (props) => {
-  const trainings = trpc.training.getAll.useQuery()
+const TrainingPage = () => {
+  const trainings = trpc.training.getAll.useQuery();
 
   return (
     <>
@@ -79,34 +97,29 @@ const TrainingPage: NextPage = (props) => {
       </Head>
       <Layout>
         <main className="lg:col-span-9 xl:col-span-9">
-            <div className="sm:flex sm:items-center">
-              <div className="sm:flex-auto">
-                <h1 className="text-xl font-semibold text-gray-900">Trainings</h1>
-              </div>
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <Button
-                  color="blue"
-                  href="/training/new"
-                >
-                  New training
-                </Button>
-              </div>
+          <div className="sm:flex sm:items-center">
+            <div className="sm:flex-auto">
+              <h1 className="text-xl font-semibold text-gray-900">Trainings</h1>
             </div>
-            <div className="mt-8 flex flex-col">
-              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                  <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <Table
-                      trainings={trainings.data}
-                    />
-                  </div>
+            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <Button color="blue" href="/training/new">
+                New training
+              </Button>
+            </div>
+          </div>
+          <div className="mt-8 flex flex-col">
+            <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                  <Table trainings={trainings.data} />
                 </div>
               </div>
             </div>
+          </div>
         </main>
       </Layout>
     </>
-  )
-}
+  );
+};
 
 export default TrainingPage;
