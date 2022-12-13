@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, type SubmitHandler, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import toast, { type Toast } from "react-hot-toast";
-import urlSlug from "url-slug";
 
 import clsx from "clsx";
 
@@ -114,11 +113,9 @@ export function NewTrainingForm() {
   const onSubmitHandler: SubmitHandler<NewTrainingFormInput> = (values) => {
     // Execute mutation
     const { name, priceOpen, priceCompany, days, website, repository } = values;
-    const slug = urlSlug(name);
 
     add({
       name: name,
-      slug: slug,
       priceOpen: priceOpen,
       priceCompany: priceCompany,
       website: website,
