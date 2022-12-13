@@ -45,3 +45,5 @@ jobs:
 
     - name: Run ESLint
       run: pnpm run lint
+      env:
+        SKIP_ENV_VALIDATION: 1
