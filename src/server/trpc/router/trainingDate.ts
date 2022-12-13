@@ -55,8 +55,6 @@ export const trainingDateRouter = router({
 
     const found = dates.find((d) => { return d.date == input.date })
 
-    console.log(found)
-
     if (found === undefined) {
       throw new Error('A training date already exists.')
     }
