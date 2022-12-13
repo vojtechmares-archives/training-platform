@@ -33,7 +33,7 @@ specifiers:
   react-dom: 18.2.0
   react-hook-form: ^7.40.0
   react-hot-toast: ^2.4.0
-  superjson: 1.9.1
+  superjson: 1.12.0
   tailwindcss: ^3.2.0
   ts-node: ^10.9.1
   typescript: ^4.8.4
@@ -54,12 +54,12 @@ dependencies:
   csstype: 3.1.1
   next: 13.0.2_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.17.0_pknogjuzx4bv7zxtatcb2ahtsq
-  next-superjson-plugin: 0.5.2_23n3ww3ut7nsrbd75czi7wasai
+  next-superjson-plugin: 0.5.2_y25ugxwsrextcggqa33arx33ay
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.40.0_react@18.2.0
   react-hot-toast: 2.4.0_owo25xnefcwdq3zjgtohz6dbju
-  superjson: 1.9.1
+  superjson: 1.12.0
   url-slug: 3.0.4
   zod: 3.20.0
 
@@ -1936,7 +1936,7 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next-superjson-plugin/0.5.2_23n3ww3ut7nsrbd75czi7wasai:
+  /next-superjson-plugin/0.5.2_y25ugxwsrextcggqa33arx33ay:
     resolution: {integrity: sha512-k+hetZvvBvzFGxYGULdIZ2Esx0XWlfvXiMa33JW1nRYMp2A7HdU8j4hnM1oMym22bwRpzK9vdryINDLnwfJCwg==}
     peerDependencies:
       next: ^13
@@ -1944,7 +1944,7 @@ packages:
     dependencies:
       hoist-non-react-statics: 3.3.2
       next: 13.0.2_biqbaboplfbrettd7655fr4n2y
-      superjson: 1.9.1
+      superjson: 1.12.0
     dev: false
 
   /next/13.0.2_biqbaboplfbrettd7655fr4n2y:
@@ -2556,8 +2556,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /superjson/1.9.1:
-    resolution: {integrity: sha512-oT3HA2nPKlU1+5taFgz/HDy+GEaY+CWEbLzaRJVD4gZ7zMVVC4GDNFdgvAZt6/VuIk6D2R7RtPAiCHwmdzlMmg==}
+  /superjson/1.12.0:
+    resolution: {integrity: sha512-B4tefmFqj8KDShHi2br2rz0kBlUJuQHtxMCydEuHvooL+6EscROTNWRfOLMDxW1dS/daK2zZr3C3N9DU+jXATQ==}
     engines: {node: '>=10'}
     dependencies:
       copy-anything: 3.0.3
