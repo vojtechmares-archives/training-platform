@@ -9,7 +9,7 @@ import { Button } from "../Button";
 import Input from "./Input";
 import Spinner from "../Spinner";
 
-type NewDateFormProps = { trainingId?: string };
+type NewDateFormProps = { trainingId: string };
 
 const registerSchema = z.object({
   trainingId: z.string().uuid(),
@@ -77,10 +77,6 @@ const errorToast = (errorMessage?: string) =>
   ));
 
 export function NewDateForm({ trainingId }: NewDateFormProps) {
-  if (trainingId === undefined) {
-    return <>Training ID not given</>;
-  }
-
   const trainingDateUtils = trpc.useContext().trainingDate;
   const { isLoading, mutate: add } = trpc.trainingDate.add.useMutation({
     onSuccess: () => {
@@ -119,7 +115,7 @@ export function NewDateForm({ trainingId }: NewDateFormProps) {
     if (isSubmitSuccessful) {
       reset();
     }
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, reset]);
 
   const onSubmitHandler: SubmitHandler<NewDateFormInput> = (values) => {
     // Execute mutation

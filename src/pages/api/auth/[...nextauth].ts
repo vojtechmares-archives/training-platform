@@ -1,7 +1,7 @@
-import NextAuth, { type NextAuthOptions } from "next-auth";
-import { AppProviders } from 'next-auth/providers';
+import NextAuth, { type User, type NextAuthOptions } from "next-auth";
+import { type AppProviders } from 'next-auth/providers';
 import GoogleProvider from "next-auth/providers/google";
-import { GoogleProfile } from "next-auth/providers/google.js";
+import { type GoogleProfile } from "next-auth/providers/google.js";
 import CredentialsProvider from 'next-auth/providers/credentials';
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -47,7 +47,7 @@ if (useMockProvider) {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-        } as any;
+        } as User;
       },
     })
   )

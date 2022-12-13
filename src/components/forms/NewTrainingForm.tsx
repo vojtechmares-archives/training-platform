@@ -54,9 +54,10 @@ const successToast = () =>
 const errorToast = (errorMessage?: string) =>
   toast.custom((t: Toast) => (
     <div
-      className={`${
-        t.visible ? "animate-enter" : "animate-leave"
-      } pointer-events-auto flex w-full max-w-md rounded bg-white shadow ring-1 ring-black ring-opacity-5`}
+      className={clsx(
+        t.visible ? "animate-enter" : "animate-leave",
+        "pointer-events-auto flex w-full max-w-md rounded bg-white shadow ring-1 ring-black ring-opacity-5"
+      )}
     >
       <div className="w-0 flex-1 p-4">
         <div className="flex-1 items-start">
@@ -82,6 +83,7 @@ const errorToast = (errorMessage?: string) =>
 export function NewTrainingForm() {
   const router = useRouter();
   const trainingUtils = trpc.useContext().training;
+
   const { isLoading, mutate: add } = trpc.training.add.useMutation({
     onSuccess: () => {
       successToast();
@@ -107,7 +109,7 @@ export function NewTrainingForm() {
     if (isSubmitSuccessful) {
       reset();
     }
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, reset]);
 
   const onSubmitHandler: SubmitHandler<NewTrainingFormInput> = (values) => {
     // Execute mutation
