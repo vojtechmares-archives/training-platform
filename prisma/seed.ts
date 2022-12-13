@@ -2,12 +2,9 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  const k8s = await prisma.training.upsert({
-    where: { slug: 'kubernetes' },
-    update: {},
-    create: {
+  const k8s = await prisma.training.create({
+    data: {
       name: 'Kubernetes',
-      slug: 'kubernetes',
       priceOpen: 11900,
       priceCompany: 44000,
       days: 2,
@@ -16,12 +13,9 @@ async function main() {
     },
   })
 
-  const tf = await prisma.training.upsert({
-    where: { slug: 'terraform' },
-    update: {},
-    create: {
+  const tf = await prisma.training.create({
+    data: {
       name: 'Terraform',
-      slug: 'terraform',
       priceOpen: 6900,
       priceCompany: 24000,
       days: 1,
@@ -30,12 +24,9 @@ async function main() {
     }
   })
 
-  const git = await prisma.training.upsert({
-    where: { slug: 'git' },
-    update: {},
-    create: {
+  const git = await prisma.training.create({
+    data: {
       name: 'Git',
-      slug: 'git',
       priceOpen: 6900,
       priceCompany: 24000,
       days: 1,
@@ -44,12 +35,9 @@ async function main() {
     }
   })
 
-  const gitlab = await prisma.training.upsert({
-    where: { slug: 'gitlab' },
-    update: {},
-    create: {
+  const gitlab = await prisma.training.create({
+    data: {
       name: 'GitLab',
-      slug: 'gitlab',
       priceOpen: 6900,
       priceCompany: 24000,
       days: 1,
@@ -58,12 +46,9 @@ async function main() {
     }
   })
 
-  const eks = await prisma.training.upsert({
-    where: { slug: 'eks' },
-    update: {},
-    create: {
+  const eks = await prisma.training.create({
+    data: {
       name: 'EKS',
-      slug: 'eks',
       priceOpen: 6900,
       priceCompany: 24000,
       days: 1,
