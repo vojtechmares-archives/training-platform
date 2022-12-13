@@ -1,11 +1,12 @@
+import { type GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import clsx from "clsx";
 
 import { trpc } from "@/utils/trpc";
 import { formatDate } from "@/utils/dateFormatter";
-
 import { Layout } from "@/components/Layout";
+import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 
 const TrainingDates = () => {
   const dates = trpc.trainingDate.getAll.useQuery();
@@ -121,3 +122,18 @@ const TrainingDates = () => {
 };
 
 export default TrainingDates;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session === null) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/sign/in",
+      },
+    };
+  }
+
+  return { props: {} };
+};

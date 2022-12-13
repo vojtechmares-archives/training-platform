@@ -10,12 +10,24 @@ import { TrainingDetail } from "@/components/TrainingDetail";
 import { UpcomingDates } from "@/components/UpcomingDates";
 import { NewDateForm } from "@/components/forms/NewDateForm";
 import prisma from "@/lib/prisma";
+import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 
 type Data = {
   training: Training | null;
 };
 
 export const getServerSideProps: GetServerSideProps<Data> = async (ctx) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session === null) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/sign/in",
+      },
+    };
+  }
+
   const id = ctx.params?.trainingId;
   if (typeof id !== "string") {
     throw new Error(`Invalid type of 'trainingId' (${typeof id})`);

@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { router, publicProcedure } from "../trpc";
+import { router, protectedProcedure } from "../trpc";
 
 export const trainingDateAttendeeRouter = router({
-  getSignUpsFromLast30Days: publicProcedure.query(({ ctx }) => {
+  getSignUpsFromLast30Days: protectedProcedure.query(({ ctx }) => {
     const date = new Date()
     date.setDate(date.getDate() - 30)
     const ago = date.toISOString().split("T")[0] // "YYYY-MM-DD"
@@ -21,7 +21,8 @@ export const trainingDateAttendeeRouter = router({
       })
     };
   }),
-  signUpToDate: publicProcedure
+
+  signUpToDate: protectedProcedure
   .input(z.object({
     trainingDateId: z.string().uuid(),
     contactInfo: z.object({
@@ -43,7 +44,7 @@ export const trainingDateAttendeeRouter = router({
     return newAttendee
   }),
 
-  getAttendeesForTrainingDate: publicProcedure
+  getAttendeesForTrainingDate: protectedProcedure
   .input(z.object({trainingDateId: z.string().uuid() }))
   .query(({ctx, input}) => {
     return ctx.prisma.trainingDateAttendee.findMany({

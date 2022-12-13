@@ -1,10 +1,9 @@
 import { type ReactNode } from "react";
 import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 
 import { Popover } from "@headlessui/react";
 import clsx from "clsx";
-
-import { Button } from "@/components/Button";
 
 import {
   Bars3Icon,
@@ -34,6 +33,13 @@ type IsOpenType = { open: boolean };
 
 export function Layout({ children }: LayoutProps) {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  const onSignOut = () => {
+    if (session) {
+      signOut();
+    }
+  };
 
   return (
     <>
@@ -87,14 +93,12 @@ export function Layout({ children }: LayoutProps) {
                       New training date
                     </Button> */}
 
-                    <Button
-                      color="red"
-                      variant="outline"
-                      href="#"
-                      className="ml-2"
+                    <button
+                      className="shaddow-sm focus:ring-offset-2bg-white inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-bold text-red-700 ring-2 ring-red-700 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-800"
+                      onClick={onSignOut}
                     >
                       Sign out
-                    </Button>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -122,21 +126,19 @@ export function Layout({ children }: LayoutProps) {
                 </div>
                 <div className="border-t border-gray-200 pt-4">
                   <div className="mx-auto mt-3 max-w-3xl space-y-6 px-4 sm:px-6">
-                    <Button
+                    {/* <Button
                       color="gray"
                       href="#"
                       className="w-full justify-center"
                     >
                       New training date
-                    </Button>
-                    <Button
-                      color="red"
-                      variant="outline"
-                      href="#"
-                      className="w-full justify-center"
+                    </Button> */}
+                    <button
+                      className="shaddow-sm focus:ring-offset-2bg-white inline-flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-bold text-red-700 ring-2 ring-red-700 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-800"
+                      onClick={onSignOut}
                     >
                       Sign out
-                    </Button>
+                    </button>
                   </div>
                 </div>
               </Popover.Panel>

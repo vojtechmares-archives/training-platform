@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { router, publicProcedure } from "../trpc";
+import { router, protectedProcedure } from "../trpc";
 
 export const trainingDateRouter = router({
-  getById: publicProcedure
+  getById: protectedProcedure
   .input(z.object({ id: z.string().uuid() }))
   .query(({ctx, input}) => {
     return ctx.prisma.trainingDate.findUnique({
@@ -12,7 +12,7 @@ export const trainingDateRouter = router({
     })
   }),
 
-  getDatesForTraining: publicProcedure
+  getDatesForTraining: protectedProcedure
   .input(z.object({ trainingId: z.string().uuid() }))
   .query(({ ctx, input }) => {
     return ctx.prisma.trainingDate.findMany({
@@ -28,7 +28,7 @@ export const trainingDateRouter = router({
     })
   }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
+  getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.trainingDate.findMany({
       include: {
         training: true,
@@ -40,7 +40,7 @@ export const trainingDateRouter = router({
     });
   }),
 
-  add: publicProcedure
+  add: protectedProcedure
   .input(z.object({
     trainingId: z.string().uuid(),
     date: z.date(),

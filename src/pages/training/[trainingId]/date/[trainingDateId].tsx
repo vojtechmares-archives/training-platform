@@ -10,12 +10,24 @@ import { TrainingDateDetail } from "@/components/TrainingDateDetail";
 import { TrainingDateAttendees } from "@/components/TrainingDateAttendees";
 import { Layout } from "@/components/Layout";
 import prisma from "@/lib/prisma";
+import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 
 type Data = {
   trainingDate: (TrainingDate & { training: Training }) | null;
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session === null) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/sign/in",
+      },
+    };
+  }
+
   const trainingId = ctx.params?.trainingId;
   const trainingDateId = ctx.params?.trainingDateId;
 

@@ -1,3 +1,4 @@
+import { type GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -7,82 +8,79 @@ import { formatCurrency } from "@/utils/currencyFormatter";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/Button";
 import { type Training } from "@prisma/client";
+import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 
-type TableProps = { trainings: Training[] | undefined };
+type TableProps = { trainings: Training[] };
 
 const Table = ({ trainings }: TableProps) => {
-  if (trainings) {
-    return (
-      <>
-        <table className="min-w-full divide-y divide-gray-300">
-          <thead className="bg-white">
-            <tr>
-              <th
-                scope="col"
-                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-              >
-                Name
-              </th>
-              <th
-                scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                Price - Open
-              </th>
-              <th
-                scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                Price - Company
-              </th>
-              <th
-                scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                # days
-              </th>
-              <th
-                scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                Website
-              </th>
+  return (
+    <>
+      <table className="min-w-full divide-y divide-gray-300">
+        <thead className="bg-white">
+          <tr>
+            <th
+              scope="col"
+              className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+            >
+              Name
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              Price - Open
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              Price - Company
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              # days
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              Website
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200 bg-white">
+          {trainings.map((training) => (
+            <tr key={training.name}>
+              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
+                <Link
+                  href={"/training/" + training.id}
+                  className="text-gray-700 hover:text-gray-900"
+                >
+                  {training.name}
+                </Link>
+              </td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                {formatCurrency(training.priceOpen)}
+              </td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                {formatCurrency(training.priceCompany)}
+              </td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                {training.days}
+              </td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 underline hover:text-gray-700">
+                <Link href={training.website} target="_blank">
+                  {training.website}
+                </Link>
+              </td>
             </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {trainings.map((training) => (
-              <tr key={training.name}>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
-                  <Link
-                    href={"/training/" + training.id}
-                    className="text-gray-700 hover:text-gray-900"
-                  >
-                    {training.name}
-                  </Link>
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {formatCurrency(training.priceOpen)}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {formatCurrency(training.priceCompany)}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {training.days}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 underline hover:text-gray-700">
-                  <Link href={training.website} target="_blank">
-                    {training.website}
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </>
-    );
-  } else {
-    return <>No trainings :(</>;
-  }
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
 };
 
 const TrainingPage = () => {
@@ -110,9 +108,13 @@ const TrainingPage = () => {
           <div className="mt-8 flex flex-col">
             <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                  <Table trainings={trainings.data} />
-                </div>
+                {trainings.data !== undefined ? (
+                  <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <Table trainings={trainings.data} />
+                  </div>
+                ) : (
+                  <>No trainings found.</>
+                )}
               </div>
             </div>
           </div>
@@ -123,3 +125,18 @@ const TrainingPage = () => {
 };
 
 export default TrainingPage;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session === null) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/sign/in",
+      },
+    };
+  }
+
+  return { props: {} };
+};

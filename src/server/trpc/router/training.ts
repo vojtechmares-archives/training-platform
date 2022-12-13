@@ -1,25 +1,15 @@
 import { z } from "zod";
 
-import { router, publicProcedure } from "../trpc";
+import { router, protectedProcedure } from "../trpc";
 
 export const trainingRouter = router({
-  getBySlug: publicProcedure
-    .input(z.object({ slug: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.prisma.training.findUnique({
-        where: { slug: input.slug },
-      })
-    }
-  ),
-
-  getAll: publicProcedure.query(({ ctx }) => {
+  getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.training.findMany();
   }),
 
-  add: publicProcedure
+  add: protectedProcedure
   .input(z.object({
     name: z.string(),
-    slug: z.string(),
     priceOpen: z.number(),
     priceCompany: z.number(),
     website: z.string().url(),
@@ -30,7 +20,6 @@ export const trainingRouter = router({
     return ctx.prisma.training.create({
       data: {
         name: input.name,
-        slug: input.slug,
         priceOpen: input.priceOpen,
         priceCompany: input.priceCompany,
         website: input.website,
