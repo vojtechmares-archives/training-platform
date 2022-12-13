@@ -9,3 +9,7 @@ db-push:
 .PHONY: db-seed
 db-seed:
 	npx prisma db seed
+
+.PHONY: lint
+lint:
+	pnpm run lint
