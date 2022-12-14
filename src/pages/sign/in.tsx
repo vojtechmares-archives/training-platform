@@ -1,5 +1,5 @@
 import { type GetServerSideProps } from "next";
-import { getProviders, signIn, useSession } from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import { type ClientSafeProvider, type LiteralUnion } from "next-auth/react";
 import { type BuiltInProviderType } from "next-auth/providers";
 
@@ -33,11 +33,8 @@ type SignInProps = {
 };
 
 const SignIn = ({ providers }: SignInProps) => {
-  const { data: session } = useSession();
-
   return (
     <main className="mt-40 flex justify-center">
-      {session?.user?.name}
       {Object.values(providers).map((provider) => (
         <div key={provider.name}>
           <button
