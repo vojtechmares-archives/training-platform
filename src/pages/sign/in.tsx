@@ -11,7 +11,6 @@ type Providers = Promise<Record<
 > | null>;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const providers = await getProviders();
   const session = await getServerAuthSession(ctx);
 
   if (session !== null) {
@@ -22,6 +21,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   }
+
+  const providers = await getProviders();
 
   return {
     props: { providers },
