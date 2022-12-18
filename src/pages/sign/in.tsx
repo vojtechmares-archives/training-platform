@@ -40,7 +40,7 @@ const SignIn = ({ providers }: SignInProps) => {
         <div key={provider.name}>
           <button
             onClick={() => signIn(provider.id)}
-            className="rounded-full border bg-blue-600 px-8 py-5 text-2xl font-medium text-white transition hover:bg-blue-800"
+            className="rounded-full border bg-blue-600 px-8 py-5 text-2xl font-medium text-white transition hover:bg-blue-500"
           >
             Sign in with {provider.name}
           </button>

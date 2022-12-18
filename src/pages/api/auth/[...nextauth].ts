@@ -62,17 +62,19 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    // async signIn({ account, profile }) {
-    //   if (account?.provider === "google") {
-    //     return profile?.email?.endsWith("@vojtechmares.com")
-    //       || profile?.email?.endsWith("@ondrejsika.com")
-    //       || profile?.email?.endsWith("@sika.io")
-    //   }
-    //   return false
-    // },
+    async signIn({ account, profile }) {
+      if (account?.provider === "google") {
+        const endsWith = profile?.email?.endsWith("@vojtechmares.com")
+          || profile?.email?.endsWith("@ondrejsika.com")
+          || profile?.email?.endsWith("@sika.io");
+
+        return !!endsWith;
+      }
+      return false
+    },
   },
-  // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
+  // Configure one or more authentication providers
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
