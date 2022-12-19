@@ -1,7 +1,7 @@
 ##### DEPENDENCIES
 
-FROM --platform=linux/amd64 node:19.2-bullseye-slim AS deps
-# RUN apk add --no-cache libc6-compat openssl
+FROM --platform=linux/amd64 node:19.3-alpine AS deps
+RUN apk add --no-cache libc6-compat openssl1.1-compat
 WORKDIR /app
 
 # Install Prisma Client - remove if not using Prisma
@@ -21,10 +21,14 @@ RUN \
 
 ##### BUILDER
 
-FROM --platform=linux/amd64 node:19.2-bullseye-slim AS builder
+FROM --platform=linux/amd64 node:19.3-alpine AS builder
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_CLIENTVAR
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN \
   if [ -f yarn.lock ]; then SKIP_ENV_VALIDATION=1 yarn build; \
@@ -35,10 +39,12 @@ RUN \
 
 ##### RUNNER
 
-FROM --platform=linux/amd64 node:19.2-bullseye-slim AS runner
+FROM --platform=linux/amd64 node:19.3-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+
+# ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -55,4 +61,3 @@ EXPOSE 3000
 ENV PORT 3000
 
 CMD ["node", "server.js"]
-
